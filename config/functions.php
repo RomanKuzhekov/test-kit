@@ -4,7 +4,7 @@ function createTree($array, $sub=0, $tab='')
 {
     $data = [];
     if ($sub > 0) {
-        $tab.='&nbsp;&nbsp;';
+        $tab.='&nbsp;&nbsp;&nbsp;';
     }
     foreach ($array as $v) { // с помощью рекурсии проверяем вложенные элементы
         if ($sub == $v->parent_id) {
