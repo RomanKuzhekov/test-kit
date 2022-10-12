@@ -32,7 +32,7 @@ abstract class Model
      */
     public function getOne(int $id)
     {
-        return $this->conn->fetchOne("SELECT * FROM {$this->tableName} WHERE status = 1 and id = :id", ['id' => $id],
+        return $this->conn->fetchOne("SELECT * FROM {$this->tableName} WHERE id = :id", ['id' => $id],
             $this->entityClass
         );
     }
@@ -62,7 +62,9 @@ abstract class Model
         $id = $data['id'];
         $arUpdateColumns = [];
         foreach ($this->attributes as $key => $value) {
-            $arUpdateColumns[] = "{$key} = '{$value}'";
+            if ($value !== 'null') {
+                $arUpdateColumns[] = "{$key} = '{$value}'";
+            }
         }
         $updateString = implode(', ', $arUpdateColumns);
 

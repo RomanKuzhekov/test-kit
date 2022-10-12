@@ -35,3 +35,10 @@ body {
 #container .content .list-items li {
     margin: 10px;
 }
+#container .content .tools a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+#container .content .tools a:hover {
+    text-decoration: underline;
+}

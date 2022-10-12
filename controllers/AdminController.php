@@ -89,6 +89,70 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Редактируем выбранный элемент
+     * @return void
+     */
+    public function actionEdit()
+    {
+        $idElement = App::call()->request->getParams();
+        if (!empty($idElement)) {
+            $item = $this->getModelItems()->getOne($idElement);
+            if (empty($item)) {
+                die('Такого элемента нет. Вернитесь назад.');
+            }
+
+            $items = $this->getModelItems()->getAll();
+
+            //Если отредактировали данные в форме и нажали Сохранить
+            if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST["name"]) && !empty($_POST["text"])) {
+                if ($this->getModelItems()->update(
+                    [
+                        'id' => $idElement,
+                        'name' => trim(strip_tags($_POST['name'])),
+                        'text' => trim(strip_tags($_POST['text'])),
+                        'parent_id' => trim(strip_tags($_POST['parent']))
+                    ]
+                )) {
+                    $this->redirect('admin');
+                }
+            }
+
+            echo $this->render("{$this->controllerName}/$this->actionName", [
+                'item' => $item,
+                'items' => $items,
+            ]);
+        }
+    }
+
+    /**
+     * Удаляем выбранный элемент
+     * @return void
+     */
+    public function actionDelete()
+    {
+        $idElement = App::call()->request->getParams();
+        if (!empty($idElement) && $_SERVER['REQUEST_METHOD'] == "GET") {
+            //Если он корневой - ищем потомков и удаляем их тоже
+            $items = $this->getModelItems()->getAll();
+            foreach ($items as $item) {
+                if ($item->parent_id == $idElement) {
+                    $itemsDelete = createTreeForDelete($items, $item->id);
+                }
+            }
+            $itemsDelete[] = $idElement;
+            foreach ($itemsDelete as $key => $id) {
+                $this->getModelItems()->delete('id', $id); // удаляем элемент
+                unset($itemsDelete[$key]);
+            }
+
+            // Если все элементы удалены - переходим на главную страницу
+            if (empty($itemsDelete)) {
+                $this->redirect('admin');
+            }
+        }
+    }
+
     private function getModel()
     {
         return App::call()->user;

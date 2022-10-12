@@ -1,28 +1,14 @@
 <? if($_SESSION['sid']): ?>
     <h1>Главная страница админки</h1>
 
-    <?php //получаем массив с нужной иерархией: родитель - потомки
-    function createTree($array, $sub=0, $tab='')
-    {
-        $data = [];
-        if ($sub > 0) {
-            $tab.='&nbsp;&nbsp;';
-        }
-        foreach ($array as $v) { // с помощью рекурсии проверяем вложенные элементы
-            if ($sub == $v->parent_id) {
-                $data[$v->id] = $tab.$v->name . " (".mb_strimwidth($v->text, 0, 20, "...").")";
-                $data += createTree($array, $v->id, $tab);
-            }
-        }
-        return $data;
-    }
-    $data = createTree($items);
+    <?
+    $data = createTree($items); //получаем массив с нужной иерархией: родитель - потомки
 
     if (!empty($data)) { ?>
         <p><b>Структура данных:</b></p>
         <ul class='list-items'>
-            <? foreach ($data as $item) { ?>
-                <li><?=$item?></li>
+            <? foreach ($data as $id => $item) {?>
+                <li><?=$item?> <span class="tools"><a href="#" class="add">&#10010;</a> <a href="/admin/edit/<?=$id?>" class="edit">&#9998;</a> <a href="/admin/delete/<?=$id?>" id="delete" class="delete">&#10006;</a></span></li>
             <? } ?>
         </ul>
     <?php } ?>

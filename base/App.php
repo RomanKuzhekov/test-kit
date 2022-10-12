@@ -38,6 +38,7 @@ class App
     public function run()
     {
         $this->config = include "../config/config.php";
+        include "../config/functions.php";
         $this->main->runAction();  //запускаем FrontController
     }
 
