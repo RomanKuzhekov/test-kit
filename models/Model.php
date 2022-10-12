@@ -78,7 +78,7 @@ abstract class Model
         $dataString = '';
         foreach ($data as $key => $val) {
             if (in_array($key, static::$fields)) {
-                $dataString .= ",'$val'";
+                $dataString .= ($val !== 'null') ? ",'$val'" : ",$val";
                 $this->attributes[$key] = $val;
             }
         }

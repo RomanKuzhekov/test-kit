@@ -90,6 +90,35 @@ class AdminController extends Controller
     }
 
     /**
+     * Добавить элемент в выбранный уровень вложенности
+     * @return void
+     */
+    public function actionAdd()
+    {
+        $idElement = App::call()->request->getParams();
+        if (!empty($idElement)) {
+            $item = $this->getModelItems()->getOne($idElement);
+        }
+
+        //Если добавили данные в форме и нажали Сохранить
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST["name"]) && !empty($_POST["text"])) {
+            if ($this->getModelItems()->create(
+                [
+                    'name' => trim(strip_tags($_POST['name'])),
+                    'text' => trim(strip_tags($_POST['text'])),
+                    'parent_id' => trim(strip_tags($_POST['parent']))
+                ]
+            )) {
+                $this->redirect('admin');
+            }
+        }
+
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'item' => $item,
+        ]);
+    }
+
+    /**
      * Редактируем выбранный элемент
      * @return void
      */
