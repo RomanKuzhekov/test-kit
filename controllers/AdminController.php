@@ -16,8 +16,15 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
+        if (empty($_SESSION['sid'])) { // Если не авторизованы - переходим на страницу авторизации
+            $this->redirect('admin/login');
+        }
 
-        echo $this->render("{$this->controllerName}/$this->actionName");
+        $items = $this->getModelItems()->getAll();
+
+        echo $this->render("{$this->controllerName}/$this->actionName", [
+            'items' => $items
+        ]);
     }
 
     /**
@@ -85,5 +92,10 @@ class AdminController extends Controller
     private function getModel()
     {
         return App::call()->user;
+    }
+
+    private function getModelItems()
+    {
+        return App::call()->items;
     }
 }

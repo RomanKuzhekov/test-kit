@@ -12,7 +12,7 @@
 
     <div class="content">
         <h1 class="title">Админка</h1>
-        <ul>
+        <ul class="menu">
             <li><a href="/" class="active">Перейти на сайт</a></li>
             <?php if(!empty($_SESSION['sid'])): ?>
                 <li><b><?=ucfirst($_SESSION['login'])?></b></li>

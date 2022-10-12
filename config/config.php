@@ -25,5 +25,8 @@ return [
         'user' => [
             'class' => \app\models\User::class
         ],
+        'items' => [
+            'class' => \app\models\Items::class
+        ],
     ],
 ];

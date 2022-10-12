@@ -42,7 +42,7 @@ abstract class Model
      */
     public function getAll()
     {
-        return $this->conn->fetchAll("SELECT * FROM {$this->tableName} where status = 1",
+        return $this->conn->fetchAll("SELECT * FROM {$this->tableName}",
             $this->entityClass
         );
     }
