@@ -4,11 +4,11 @@ function createTree($array, $sub=0, $tab='')
 {
     $data = [];
     if ($sub > 0) {
-        $tab.='&nbsp;&nbsp;&nbsp;';
+        $tab .= "<span class='child'>&nbsp;&nbsp;&nbsp;</span>";
     }
     foreach ($array as $v) { // с помощью рекурсии проверяем вложенные элементы
         if ($sub == $v->parent_id) {
-            $data[$v->id] = $tab.$v->name . " (".mb_strimwidth($v->text, 0, 20, "...").")";
+            $data[$v->id] = "<span class='item' data-id='{$v->id}' data-parent='{$v->parent_id}'>" . $tab.$v->name . " <span class='text'>(".mb_strimwidth($v->text, 0, 20, "...").")<span> </span>";
             $data += createTree($array, $v->id, $tab);
         }
     }

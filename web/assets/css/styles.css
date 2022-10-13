@@ -35,6 +35,15 @@ body {
 #container .content .list-items li {
     margin: 10px;
 }
+#data-structure .list-items {
+    padding-left: 20px;
+}
+#data-structure .list-items li .hide-show {
+    margin-left: -23px;
+}
+#data-structure .list-items li:hover {
+    cursor: pointer;
+}
 #container .content .tools a {
     text-decoration: none;
     margin-right: 10px;

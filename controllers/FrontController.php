@@ -25,7 +25,7 @@ class FrontController extends Controller
         $request = App::call()->request;
 
         $this->controllerName = $request->getControllerName() ?: App::call()->config['defaultController'];
-        $this->actionName = $request->getActionName() ?: "login";
+        $this->actionName = $request->getActionName() ?: "index";
         $this->controller = App::call()->config['controller_namespace'] . ucfirst($this->controllerName) . 'Controller';
 
         $this->checkLogin();
