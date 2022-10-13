@@ -38,12 +38,17 @@ $(document).ready(function(){
     $("#data-structure .list-items .item .hide-show").click(function () {
         let idParent = $(this).parent().attr('data-id');
 
+        let arSonsDop = [];
         $("#data-structure .list-items .item").each(function () {
             if ($(this).attr('data-parent') == idParent) {
-              //  $(this).parent().show();
+                arSonsDop.push($(this).attr('data-id'));
                 $(this).parent().slideToggle(300);
             }
+            if ($.inArray($(this).attr('data-parent'), arSonsDop) != -1) {
+                $(this).parent().hide();
+            }
         });
+
         return false;
     });
 
