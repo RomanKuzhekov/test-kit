@@ -2,10 +2,11 @@
 
 namespace app\base;
 
-require '../vendor/autoload.php';
+require "../services/Autoloader.php";
 require '../traits/Singleton.php';
 
 use app\controllers\Controller;
+use app\services\Autoloader;
 use app\services\Db;
 use app\traits\Singleton;
 
@@ -13,7 +14,7 @@ use app\traits\Singleton;
 /**
  * Главный класс для входа в приложение
  * Используем Синглтон для одиночного подключения класса
- * подключили автозагрузчик файлов Composera
+ * подключили автозагрузчик файлов
  * используем магический метод get для подключения компонентов прописанных в конфиге
  * запускаем FrontController для обработки строки(controller/action/id) переданной в бразуер
  *
@@ -37,6 +38,7 @@ class App
 
     public function run()
     {
+        spl_autoload_register([new Autoloader(), "loadClass"]);
         $this->config = include "../config/config.php";
         include "../config/functions.php";
         $this->main->runAction();  //запускаем FrontController
