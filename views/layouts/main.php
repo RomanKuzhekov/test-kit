@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Тестовое задание</title>
     <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" media="all"/>
-    <script src="/assets/js/jquery.js"></script>
     <script type="text/javascript" src="/assets/js/script.js"></script>
 </head>
 <body>
